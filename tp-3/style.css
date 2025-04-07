@@ -1,0 +1,74 @@
+body {
+    font-size: 18px;
+    background-color: #ffe;
+    color: #210;
+}
+
+#contenedor {
+    max-width: 40ch;
+    margin: 2rem auto;
+    padding: 1rem;
+}
+
+h1 {
+    font-size: 2rem;
+    text-align: center;
+}
+
+p {
+    font-family: serif;
+}
+
+#primer-parrafo {
+    font-size: 1.3rem;
+    background-color: #cee;
+}
+
+em{
+    background-color: #933;
+}
+
+*{
+    outline: 1px solid #333
+}
+
+p.fuente{
+    opacity: 100%;
+}
+
+em,a{
+    text-shadow: none;
+}
+
+.novelas-parrafo,.fuente-parrafo{
+    text-shadow: none;
+}
+
+p.fuente{
+    color:#000;
+}
+
+.complicado{
+    color:#C62;
+}
+
+p.importante em {
+    font-weight: bold;
+    color: #144;
+}
+
+p.novelas a {
+    outline: none;
+    text-decoration: none;
+}
+p.novelas a:hover {
+    text-decoration: underline;
+    background-color: #ccd;
+}
+
+body p.fuente.parrafo {
+    color: #999 !important;
+    font-size: 0.9rem;
+    opacity: 75%;
+    text-align: center;
+}
