@@ -1,0 +1,70 @@
+body {
+    background-color: #222;
+    color: #ee6;
+    font-family: sans-serif;
+}
+
+h1 {
+    text-align: center;
+    text-transform: uppercase;
+}
+
+h1, h2, h3 {
+    color: #eee;
+    text-transform: uppercase;
+}
+
+strong {
+    border-bottom: 1px solid white;
+}
+
+.the-force {
+    background-color: #444;
+    font-weight: bold;
+}
+
+.light-side {
+    color: #66f;
+}
+
+.dark-side {
+    color: #f33;
+}
+
+#og-trilogy {
+    list-style-type: circle;
+}
+
+.movies-list:nth-of-type(2) {
+    padding-left: 20px;
+}
+
+.movies-list:nth-of-type(3) li:last-child {
+    margin-top: 15px;
+}
+
+p:first-of-type::first-line {
+    color: #efe;
+}
+
+
+h1:hover {
+    color: #f80;
+}
+
+
+a:visited {
+    color: gray;
+}
+
+a:not([href]) {
+    font-style: italic;
+}
+
+.movies-list li:nth-child(odd) {
+    background-color: #111;
+}
+
+.movies-list li:nth-child(even) {
+    background-color: #333;
+}
