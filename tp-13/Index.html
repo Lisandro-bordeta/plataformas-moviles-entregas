@@ -1,0 +1,143 @@
+<script type="text/javascript">
+    const listaProductos = document.getElementById('lista-productos');
+    const formulario = document.getElementById('form-producto');
+    const inputProducto = formulario.querySelector('input');
+    const localStorageKey = 'lista-compras';
+
+    // Función para guardar la lista en localStorage
+    function guardarListaEnLocalStorage() {
+        const productos = Array.from(listaProductos.children).map(li => {
+            return {
+                nombre: li.textContent.replace(/ \u270E|\u274C|\u2714/g, '').trim(),
+                comprado: li.classList.contains('comprado')
+            };
+        });
+        localStorage.setItem(localStorageKey, JSON.stringify(productos));
+    }
+
+    // Función para cargar la lista desde localStorage
+    function cargarListaDesdeLocalStorage() {
+        const productosGuardados = JSON.parse(localStorage.getItem(localStorageKey));
+        if (productosGuardados) {
+            productosGuardados.forEach(producto => {
+                agregarProducto(producto.nombre, producto.comprado);
+            });
+        }
+    }
+
+    // Función para crear un nuevo elemento de lista
+    function crearElementoDeLista(nombreProducto, comprado = false) {
+        const li = document.createElement('li');
+        li.textContent = nombreProducto;
+        if (comprado) {
+            li.classList.add('comprado');
+        }
+
+        // Botón para marcar como comprado (Bonus Track)
+        const botonComprado = document.createElement('span');
+        botonComprado.textContent = ' ✔';
+        botonComprado.className = 'marcar-comprado';
+        botonComprado.style.cursor = 'pointer';
+        botonComprado.addEventListener('click', () => {
+            li.classList.toggle('comprado');
+            guardarListaEnLocalStorage();
+        });
+
+        // Botón de edición (Bonus Track)
+        const botonEditar = document.createElement('span');
+        botonEditar.textContent = ' ✏';
+        botonEditar.className = 'editar-producto';
+        botonEditar.style.cursor = 'pointer';
+        botonEditar.addEventListener('click', () => {
+            const nuevoNombre = prompt('Editar producto:', li.textContent.replace(/ \u270E|\u274C|\u2714/g, '').trim());
+            if (nuevoNombre !== null && nuevoNombre.trim() !== '') {
+                li.textContent = nuevoNombre.trim();
+                li.appendChild(botonEditar);
+                li.appendChild(botonEliminar);
+                li.appendChild(botonComprado);
+                guardarListaEnLocalStorage();
+            }
+        });
+
+        // Botón de eliminación
+        const botonEliminar = document.createElement('span');
+        botonEliminar.textContent = ' ❌';
+        botonEliminar.className = 'eliminar-producto';
+        botonEliminar.style.cursor = 'pointer';
+        botonEliminar.addEventListener('click', () => {
+            li.remove();
+            guardarListaEnLocalStorage();
+        });
+
+        li.appendChild(botonEditar);
+        li.appendChild(botonEliminar);
+        li.appendChild(botonComprado);
+
+        return li;
+    }
+
+    // Función para agregar un producto a la lista
+    function agregarProducto(nombreProducto, comprado = false) {
+        if (nombreProducto.trim() === '') {
+            return;
+        }
+
+        const li = crearElementoDeLista(nombreProducto.trim(), comprado);
+        listaProductos.appendChild(li);
+        guardarListaEnLocalStorage();
+    }
+
+    // Función para limpiar la lista
+    function limpiarLista() {
+        listaProductos.innerHTML = '';
+        guardarListaEnLocalStorage();
+    }
+
+    // Función para ordenar la lista alfabéticamente
+    function ordenarLista() {
+        const productos = Array.from(listaProductos.children);
+        productos.sort((a, b) => a.textContent.localeCompare(b.textContent));
+        listaProductos.innerHTML = '';
+        productos.forEach(producto => listaProductos.appendChild(producto));
+        guardarListaEnLocalStorage();
+    }
+
+    // Manejador del formulario
+    function handlerFormulario(evento) {
+        evento.preventDefault();
+        const nombreProducto = inputProducto.value;
+        inputProducto.value = "";
+        agregarProducto(nombreProducto);
+    }
+
+    // Cargar la lista al iniciar la página
+    document.addEventListener('DOMContentLoaded', () => {
+        cargarListaDesdeLocalStorage();
+        
+        // Agregar botones de control a la interfaz
+        const divCardBody = document.querySelector('.card-body');
+        
+        // Botón de Limpiar Lista
+        const botonLimpiar = document.createElement('button');
+        botonLimpiar.textContent = 'Limpiar Lista';
+        botonLimpiar.className = 'btn btn-danger me-2';
+        botonLimpiar.addEventListener('click', limpiarLista);
+
+        // Botón de Ordenar
+        const botonOrdenar = document.createElement('button');
+        botonOrdenar.textContent = 'Ordenar Productos';
+        botonOrdenar.className = 'btn btn-info';
+        botonOrdenar.addEventListener('click', ordenarLista);
+
+        const divBotones = document.createElement('div');
+        divBotones.className = 'd-flex justify-content-end mb-3';
+        divBotones.appendChild(botonLimpiar);
+        divBotones.appendChild(botonOrdenar);
+
+        // Insertar los botones debajo del listado
+        const listaProductosElemento = document.getElementById('lista-productos');
+        listaProductosElemento.insertAdjacentElement('afterend', divBotones);
+    });
+
+    formulario.addEventListener('submit', handlerFormulario);
+</script>
