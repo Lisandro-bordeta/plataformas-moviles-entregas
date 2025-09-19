@@ -1,0 +1,24 @@
+body {
+    background-color: #f0f0f0;
+}
+
+.card {
+    transition: transform 0.2s ease-in-out;
+    border-radius: 10px;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-img-top {
+    height: 150px;
+    width: auto;
+    object-fit: contain;
+}
+
+/* Puedes agregar clases específicas para cada tipo de Pokémon si quieres */
+.type-fire {
+    background-color: #ff5500;
+    color: white;
+}
